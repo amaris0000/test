@@ -1,0 +1,157 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'OAGothic-ExtraBold';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/OAGothic-ExtraBold.woff2') format('woff2');
+    font-weight: 800;
+    font-style: normal;
+}
+body{
+    font-family: 'Nanum Gothic', sans-serif;
+    background-color: #dadae6;
+}
+.menubar{
+    position: fixed;
+    top: 30px;
+    left: 90px;
+    right: 90px;
+    height: 50px;
+    background-color: white;
+    box-shadow: 0px 8px 24px 5px #ccccdd;
+    border-radius: 10px;
+    display: inline-block;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 1000;
+    line-height: 50px;
+}
+.options{
+    color: black;
+    text-decoration-line: none;
+    margin-right: 20px;
+    float: right;
+}
+#Again{
+    font-family: 'Black Han Sans', sans-serif;
+    color:#010149;
+    font-weight: bolder;
+    text-decoration-line: none;
+    font-size: 35px;
+}
+
+.material-symbols-rounded {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+    color: black;
+    margin-top: 13px;
+    margin-left: 20px;
+}
+
+.content_box{
+    position: fixed;
+    top: 110px;
+    left: 90px;
+    right: 90px;
+    height: 540px;
+    background-color: none;
+
+}
+.content_box_left{
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: white;
+    width:65%;
+    height: 100%;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px 1px #ccccdd;
+}
+.content_box_right{
+    position: absolute;
+    background: white;
+    top: 0;
+    right: 0;
+    width:30%;
+    height: 500px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px 1px #ccccdd;
+    padding: 20px;
+}
+#back{
+    position:absolute;
+    top: 15px;
+    left: 15px;
+}
+.title{
+    font-family: 'OAGothic-ExtraBold', sans-serif ;
+    margin-top: 70px;
+    margin-left: 30px;
+    font-size: 40px;
+    font-weight: bolder;
+    text-align: left;
+}
+.explain{
+    font-family: 'Nanum Gothic', sans-serif;
+    background-color: whitesmoke;
+    height: 250px;
+    margin-left: 30px;
+    margin-right: 30px;
+    border-radius: 10px;
+    padding-top: 5px;
+    padding-left: 15px;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 25px;
+}
+/*
+.content{
+    margin: auto 30px;
+    font-size: 20px;
+    font-weight: 400;
+}*/
+.favorite_btn{
+    position: absolute;
+    bottom: 50px;
+    right: 250px;
+    background-color: #9acafa;
+    border: 0px;
+    width: 150px;
+    height: 40px;
+    border-radius: 80px;
+    box-shadow: 5px 5px 10px 1px lightgrey;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
+}
+.apply_btn{
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+    background-color: #6764ca;
+    border: 0px;
+    width: 150px;
+    height: 40px;
+    border-radius: 80px;
+    box-shadow: 5px 5px 10px 1px lightgrey;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
+}
+#btn_text{
+    text-decoration-line: none;
+    color: white;
+    font-size: 15px;
+    vertical-align: center;
+}
+
+span, #category{
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: -10px;
+}
+hr{
+    background-color: #6764ca;
+}

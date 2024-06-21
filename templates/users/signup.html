@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %} 
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+    <link href="//cdn.jsdelivr.net/gh/snz-hayden/toolo/fonts/black_han_sans/black_han_sans.css" rel="stylesheet">
+</head>
+
+<body>
+    <p id="signup">Signup</p>
+    <div class="signup_section">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="guide_section">
+                <div class="guide">ID</div>
+                <div class="guide">PW</div>
+                <div class="guide">PW chk</div>
+            </div>
+            <div class="input_section">
+                {{ form.as_p }}
+            </div>
+            <div class="btn_section">
+                <button type="submit" id="box_signup">회원가입</button> 
+        </form>
+            </div>
+            <div class="bottom_section">
+        <a href="{% url 'login' %}" class="signup_bottom_text">로그인</a>
+        <hr style="height:20px; width:1px; border-width:0; background-color:white; text-align:center; display:inline-block; vertical-align: middle;">
+        <a href="{% url 'index' %}" class="signup_bottom_text">홈으로</a>
+            </div>
+    </div>
+</body>
+</html>

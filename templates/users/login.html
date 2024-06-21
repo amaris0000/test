@@ -1,0 +1,58 @@
+<!--<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+
+<body>
+    <h1>Login</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">로그인</button>
+    </form>
+    <a href="{% url 'signup'%}">회원가입</a>
+    <a href="{% url 'index' %}">홈으로</a>
+</body>
+
+</html>-->
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link href="//cdn.jsdelivr.net/gh/snz-hayden/toolo/fonts/black_han_sans/black_han_sans.css" rel="stylesheet">
+</head>
+
+<body>
+    <p id="login">Login</p>
+    <div class="login_section">
+        <div class="guide_section">
+            <div class="guide">ID</div>
+            <div class="guide">PW</div>
+        </div>
+        <div class="input_section">
+            <form method="POST">
+            {% csrf_token %}
+            {{ form.username.label_tag }}{{ form.username }}
+            {{ form.password.label_tag }}{{ form.password }}
+        </div>
+        <div class="btn_section">
+            <button type="submit" id="box_login">로그인</button>
+        </form>
+        <div class="bottom_section">
+            <a href="{% url 'signup'%}" class="login_bottom_text">회원가입</a>
+            <hr style="height:20px; width:1px; border-width:0; background-color:white; text-align:center; display:inline-block; vertical-align: middle;">
+            <a href="{% url 'index' %}" class="login_bottom_text">홈으로</a>
+        </div>
+        </div>
+    </div>
+</body>
+
+</html>

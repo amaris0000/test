@@ -1,0 +1,75 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+body{
+    font-family: 'Pretendard-Regular', sans-serif;
+}
+/*index*/
+.a{
+    text-decoration-line: none;
+    text-decoration-color: black;
+}
+.main{
+    text-align: center;
+}
+.type{
+    margin: 50px 50px;
+    color: black;
+    /*background-image: url('image/job.png');*/
+    border: 0px;
+    width: 30%;
+    height: 400px;
+    font-size: 40px;
+    font-weight: bolder;
+    text-align: center;
+    line-height: 400px;
+    border-radius: 100px;
+    box-shadow: 0px 8px 24px 15px #EAF0E9;
+    cursor: pointer;
+    display: inline-block;
+    text-decoration: none;
+}
+.map{
+    margin: 50px 50px;
+    color: black;
+    /*background-image: url('image/map.png');*/
+    border: 0px;
+    width: 30%;
+    height: 400px;
+    font-size: 40px;
+    font-weight: bolder;
+    text-align: center;
+    line-height: 400px;
+    border-radius: 100px;
+    box-shadow: 0px 8px 24px 15px #EAF0E9;
+    cursor: pointer;
+    display: inline-block;
+    text-decoration: none;
+}
+.type:hover{
+    transform: scale(1.01);
+    background-image: linear-gradient(to top left, #3e9542, #54c0cc);
+    color: white;
+}
+.map:hover{
+    transform: scale(1.01);
+    background-image: linear-gradient(to top left, #3e9542, #54c0cc);
+    color: white;
+}
+.bottom{
+    text-align: center;
+}
+.bottom_text{
+    margin: 15px 30px;
+    color: black;
+    font-size: 20px;
+    font-weight: 300;
+    text-align: center;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    text-decoration: none;               
+}

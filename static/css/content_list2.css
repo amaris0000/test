@@ -1,0 +1,221 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'OAGothic-ExtraBold';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/OAGothic-ExtraBold.woff2') format('woff2');
+    font-weight: 800;
+    font-style: normal;
+}
+body{
+    font-family: 'Pretendard-Regular', sans-serif;
+    background-color: #dadae6;
+}
+
+.a{
+    text-decoration-line: none;
+    text-decoration-color: black;
+}
+.menubar{
+    position: fixed;
+    top: 30px;
+    left: 90px;
+    right: 90px;
+    height: 50px;
+    background-color: white;
+    box-shadow: 0px 8px 24px 5px #ccccdd;
+    border-radius: 10px;
+    display: inline-block;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 1000;
+    line-height: 50px;
+}
+.options{
+    color: black;
+    text-decoration-line: none;
+    margin-right: 20px;
+    float: right;
+}
+#Again{
+    font-family: 'Black Han Sans', sans-serif;
+    color:#010149;
+    font-weight: bolder;
+    text-decoration-line: none;
+    font-size: 35px;
+}
+
+.background{
+    font-family: 'Nanum Gothic', sans-serif;
+    position: fixed;
+    top: 110px;
+    left: 70px;
+    right: 70px;
+    height:700px;
+    background-color: none;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-around;
+}
+.contents_section{
+    position: relative;
+    background-color: none;
+    top: 110;
+    width: 30%;
+    height: 100%;
+}
+.box_top{
+    font-family: 'OAGothic-ExtraBold', sans-serif ;
+    position: absolute;
+    box-shadow: 0px 4px 24px 3px #a8a8d4;
+    background-color: #38388a;
+    border-radius: 10px;
+    top: 0;
+    width: 100%;
+    height: 10%;
+    color: white;
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.box_bottom{
+    position: absolute;
+    box-shadow: 0px 8px 24px 5px #ccccdd;
+    background-color: white;
+    border-radius: 10px;
+    top: 90px;
+    width: 100%;
+    height: 75%;
+    overflow: scroll;
+    padding-top: 15px;
+}
+.box_bottom_rec{
+    position: absolute;
+    box-shadow: 0px 8px 24px 5px #ccccdd;
+    background-color: white;
+    border-radius: 10px;
+    top: 90px;
+    width: 100%;
+    height: 75%;
+    padding-top: 15px;
+}
+
+.search_section{
+    position: absolute;
+    background-color: #6764ca;
+    border-radius: 10px;
+    top: 88px;
+    width: 100%;
+    height: 40px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+.search_box{
+    width:220px;
+    height: 30px;
+    font-size: 15px;
+    border-radius: 5px;
+    border: none;
+    background: transparent;
+    color: white;
+}
+input::placeholder{
+    color: white;
+}
+.search_btn{
+    background-color: transparent;
+    border: none;
+    border-radius: 5px;
+    font-size: 15px;
+    color: white;
+    cursor: pointer;
+    height: 30px;
+    display: inline-flex;
+    justify-content: left;
+    align-items: center;
+}
+.reset_btn{
+    background-color: transparent;
+    border: none;
+    border-radius: 5px;
+    font-size: 15px;
+    color: white;
+    cursor: pointer;
+    height: 30px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+.box_bottom_search{
+    position: absolute;
+    box-shadow: 0px 8px 24px 5px #ccccdd;
+    background-color: white;
+    border-radius: 10px;
+    top: 145px;
+    width: 100%;
+    height: 470px;
+    padding-top: 15px;
+}
+
+.contents{
+    background: none;
+    padding: 17px;
+    margin: 0 auto;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.contents a{
+    text-decoration-line: none;
+    color: black;
+}
+.contents:hover{
+    background-color: #dadae6;
+    border: none;
+    border-radius: 10px;
+    font-weight: bolder;
+}
+.contents:hover a{
+    color: #6677cc;
+}
+.bottom_text{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    background-color: white;
+    text-align: center;
+    margin-top:40px;
+    line-height: 50px;
+    border: none;
+    border-top: solid 1px lightgrey;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.bottom_text a{
+    text-decoration: none;
+    color: black;
+}
+.bottom_text_left{
+    position: absolute;
+    left: 0;
+    background-color: none;
+    margin:5px 10px;
+}
+.bottom_text_center{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.bottom_text_right{
+    position: absolute;
+    right: 0;
+    background-color: none;
+    margin:5px 10px;
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content_list</title>
+    <link rel="stylesheet" href="{% static 'css/content_list2.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link href="https://fonts.googleapis.com/earlyaccess/nanumgothic.css" rel="stylesheet">
+    <link href="//cdn.jsdelivr.net/gh/snz-hayden/toolo/fonts/black_han_sans/black_han_sans.css" rel="stylesheet">
+
+    {% comment %} 페이징 동적 처리 {% endcomment %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('body').on('click', '.page-link', function (e) {
+                e.preventDefault();
+                var url = $(this).attr('href');
+                $.get(url, function (data) {
+                    $('#content_items').html(data.page_contents);
+                    $('#similar_content_items').html(data.similar_page_contents);
+                });
+            });
+
+            $('#reset-search').on('click', function () {
+                $.get("{% url 'content_list' %}", function (data) {
+                    $('#content_items').html(data.page_contents);
+                    $('#search-query').val('');
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="menubar">
+        <a href="{% url 'index' %}" id="Again">Again</a>
+        {% if request.user.is_authenticated %}
+            <!--로그인-->
+            <a href="{% url 'logout' %}" class="options">로그아웃</a>    
+            <a href="{% url 'my_page' %}" class="options">마이페이지</a>
+        {% else %}
+            <!--비로그인-->
+            <a href="{% url 'login' %}" class="options">로그인</a>
+            <a href="{% url 'signup'%}" class="options">회원가입</a>
+        {% endif %}
+    </div>
+
+    <div class="background">
+        <div class="contents_section">
+            <div class="box_top">상 위</div>
+            <div class="box_bottom">
+            {% for content in top_contents %}
+                <div class="contents">
+                    <a href="{% url 'content' content.id %}">{{ content.title }}</a>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+        {% if request.user.is_authenticated %}
+        <div class="contents_section">
+            <div class="box_top">추 천</div>
+            <div class="box_bottom_rec">
+                <div id="similar_content_items">
+                    {% include 'contents/similar_content_items.html' %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <div class="contents_section">
+            <div class="box_top">검 색</div>
+            <div class="search_section">
+                <form method="GET">
+                    <input type="text" name='q' id="search-query" {% if search_query %}value="{{ search_query }}{% endif %}" placeholder="검색어를 입력하세요." class="search_box">
+                    <button type="submit" class="search_btn">검색</button>
+                    <button type="button" id="reset-search" class="reset_btn" >초기화</button>
+                </form>
+            </div>
+            <div class="box_bottom_search">
+                <div id="content_items">
+                    {% include 'contents/content_items.html' %}
+                </div>
+            </div>
+        </div>
+</div>
+</body>
+</html>

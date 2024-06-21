@@ -1,0 +1,22 @@
+{% for content in page_contents %}
+    <div class="contents">
+        <a href="{% url 'content' content.id %}">{{ content.title }}</a>
+    </div>
+{% endfor %}
+{% if page_contents.has_other_pages %}
+    <div class="bottom_text">
+        {% if page_contents.has_previous %}
+        <div class="bottom_text_left">
+            <a href="?page=1{% if search_query %}&q={{ search_query }}{% endif %}" class="page-link"><span class="material-symbols-rounded">first_page</span></a>
+            <a href="?page={{ page_contents.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}" class="page-link"><span class="material-symbols-rounded">chevron_left</span></a>
+        </div>
+        {% endif %}
+        <div class="bottom_text_center">{{page_contents.number }} / {{ page_contents.paginator.num_pages }}</div>
+        <div class="bottom_text_right">
+        {% if page_contents.has_next %}
+            <a href="?page={{ page_contents.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}" class="page-link"><span class="material-symbols-rounded">chevron_right</span></a>
+            <a href="?page={{ page_contents.paginator.num_pages }}{% if search_query %}&q={{ search_query }}{% endif %}" class="page-link"><span class="material-symbols-rounded">last_page</span></a>
+        </div>
+        {% endif %}
+    </div>
+{% endif %}

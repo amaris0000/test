@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+
+<head>
+    <meta charset="utf-8">
+    <title> 지도에서 찾기 </title>
+    <link rel="stylesheet" href="{% static 'css/map.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link href="//cdn.jsdelivr.net/gh/snz-hayden/toolo/fonts/black_han_sans/black_han_sans.css" rel="stylesheet">
+</head>
+<body>
+    <div id="map-container">
+        <div id="content-list">
+            <div class="menubar">
+                <a href="{% url 'index' %}" id="Again">Again</a>
+                {% if request.user.is_authenticated %}
+                    <a href="{% url 'my_page' %}" class="options">마이페이지</a>
+                    <a href="{% url 'logout' %}" class="options">로그아웃</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="options">로그인</a>
+                {% endif %}
+            </div>
+            <!--<div>{{ user.username }}(ID: {{ user.id }})</div> 삭제 가능?-->
+            <div class="list_section">
+                <div class="box_top"><p id="list-title">기관 목록</p></div>
+                <div class="search_section">
+                    <input type="text" class="search_box" id="search-input" placeholder="기관 검색">
+                    <button type="submit" class="search_btn">검색</button>
+                </div>
+                <div class="box_bottom">
+                    <ul id="content-titles">
+                        <!-- 기관 목록을 JavaScript에서 동적으로 생성합니다. -->
+                    </ul>
+                    <div class="bottom_text">
+                        <div class="bottom_text_center" id="org-pagination">
+                                <button id="org-prev-btn" disabled class="pagination"><span class="material-symbols-rounded" id="icon">chevron_left</span></button>
+                                <button id="org-next-btn" disabled class="pagination"><span class="material-symbols-rounded" id="icon">chevron_right</span></button>
+                        </div>
+                        <div id="back-to-orgs-container" class="bottom_text_center">
+                            <button id="back-to-orgs">기관 목록으로 돌아가기</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="map"></div>
+    </div>
+    <script>
+        var apiKey = "{{ kakao_map_api_key }}";
+        var organizations = [{% for organization in organizations %}"{{ organization }}",{% endfor %}];
+
+        // 기관 목록을 오름차순으로 정렬합니다.
+        organizations.sort();
+
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${apiKey}&libraries=services&autoload=false`;
+        script.async = true;
+        script.onload = function() {
+            kakao.maps.load(function() {
+                var container = document.getElementById('map');
+                var options = {
+                    center: new kakao.maps.LatLng(33.450701, 126.570667),
+                    level: 6
+                };
+                var map = new kakao.maps.Map(container, options);
+                var zoomControl = new kakao.maps.ZoomControl();
+                map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+                map.setMaxLevel(12);
+                var geocoder = new kakao.maps.services.Geocoder();
+                var positions = [];
+                var markers = {};
+
+                {% for mapL in mapList %}
+                    positions.push({
+                        id: '{{ mapL.id }}',
+                        title: '{{ mapL.title }}',
+                        address: '{{ mapL.location }}',
+                        content: '{{ mapL.content }}',
+                        organization: '{{ mapL.organization_name }}',
+                        people: '{{ mapL.type_of_people }}',
+                        home: '{{ mapL.content_link }}',
+                        url: '{% url "content" mapL.id %}',
+                    });
+                {% endfor %}
+
+                positions.sort((a, b) => b.title.localeCompare(a.title));
+
+                var currentPage = 1;
+                var itemsPerPage = 6;
+                var orgCurrentPage = 1;
+                var orgItemsPerPage = 8;
+                var filteredPositions = positions;
+
+                function displayOrganizations(orgs, page = 1) {
+                    var contentList = document.getElementById('content-titles');
+                    contentList.innerHTML = '';
+                    var start = (page - 1) * orgItemsPerPage;
+                    var end = start + orgItemsPerPage;
+                    var currentOrgs = orgs.slice(start, end);
+
+                    currentOrgs.forEach(function(organization) {
+                        var li = document.createElement('li');
+                        var a = document.createElement('a');
+                        a.href = "#";
+                        a.setAttribute('data-organization', organization);
+                        a.textContent = organization;
+                        li.appendChild(a);
+                        contentList.appendChild(li);
+                    });
+
+                    document.getElementById('org-prev-btn').disabled = page === 1;
+                    document.getElementById('org-next-btn').disabled = end >= orgs.length;
+
+                    document.querySelectorAll('#content-titles a').forEach(function(element) {
+                        element.addEventListener('click', function(event) {
+                            event.preventDefault();
+                            var organization = this.getAttribute('data-organization');
+                            filteredPositions = positions.filter(function (pos) {
+                                return pos.organization === organization;
+                            });
+
+                            filteredPositions.sort((a, b) => b.title.localeCompare(a.title));
+
+                            currentPage = 1;
+                            displayPage(currentPage, filteredPositions);
+                            document.getElementById('back-to-orgs-container').style.display = 'flex';
+                            document.getElementById('org-pagination').style.display = 'none';
+                            document.getElementById('search-container').style.display = 'none';
+                            document.getElementById('list-title').textContent = organization + '의 콘텐츠 목록';
+
+                            if (markers[organization] && markers[organization].length > 0) {
+                                var firstMarker = markers[organization][0];
+                                map.setCenter(firstMarker.getPosition());
+                            }
+                        });
+                    });
+                }
+
+                function displayPage(page, positions) {
+                    var contentList = document.getElementById('content-titles');
+                    contentList.innerHTML = '';
+                    var start = (page - 1) * itemsPerPage;
+                    var end = start + itemsPerPage;
+                    var currentPositions = positions.slice(start, end);
+
+                    currentPositions.forEach(function (pos, i) {
+                        var li = document.createElement('li');
+                        var a = document.createElement('a');
+                        a.href = pos.url;
+                        a.textContent = (start + i + 1) + '. ' + pos.title;
+                        li.appendChild(a);
+                        contentList.appendChild(li);
+                    });
+
+                    document.getElementById('org-prev-btn').disabled = page === 1;
+                    document.getElementById('org-next-btn').disabled = end >= positions.length;
+                }
+
+                document.getElementById('org-prev-btn').addEventListener('click', function() {
+                    if (orgCurrentPage > 1) {
+                        orgCurrentPage--;
+                        displayOrganizations(organizations, orgCurrentPage);
+                    }
+                });
+
+                document.getElementById('org-next-btn').addEventListener('click', function() {
+                    if ((orgCurrentPage * orgItemsPerPage) < organizations.length) {
+                        orgCurrentPage++;
+                        displayOrganizations(organizations, orgCurrentPage);
+                    }
+                });
+
+                positions.forEach(function (position) {
+                    geocoder.addressSearch(position.address, function(result, status) {
+                        if (status === kakao.maps.services.Status.OK) {
+                            var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                            var marker = new kakao.maps.Marker({
+                                map: map,
+                                position: coords,
+                                clickable: true
+                            });
+
+                            if (!markers[position.organization]) {
+                                markers[position.organization] = [];
+                            }
+                            markers[position.organization].push(marker);
+
+                            var iwContent = '<div style="width:175px; height:50;px; text-align:center; padding:6px 0;">' + position.organization + '</div>',
+                                iwRemoveable = true;
+                            var infowindow = new kakao.maps.InfoWindow({
+                                content: iwContent,
+                                removable: iwRemoveable
+                            });
+
+                            kakao.maps.event.addListener(marker, 'click', function() {
+                                infowindow.open(map, marker);
+                                map.setCenter(coords);
+
+                                currentPage = 1;
+                                filteredPositions = positions.filter(function (pos) {
+                                    return pos.organization === position.organization;
+                                });
+
+                                filteredPositions.sort((a, b) => b.title.localeCompare(a.title));
+
+                                displayPage(currentPage, filteredPositions);
+                                document.getElementById('back-to-orgs-container').style.display = 'flex';
+                                document.getElementById('org-pagination').style.display = 'none';
+                                document.getElementById('search-container').style.display = 'none';
+                                document.getElementById('list-title').textContent = position.organization + '의 콘텐츠 목록';
+                            });
+
+                            kakao.maps.event.addListener(map, 'click', function () {
+                                infowindow.close();
+                            });
+                        }
+                    });
+                });
+
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        var lat = position.coords.latitude,
+                            lon = position.coords.longitude;
+                        var locPosition = new kakao.maps.LatLng(lat, lon);
+                        map.setCenter(locPosition);
+                    });
+                } else {
+                    var locPosition = new kakao.maps.LatLng(33.450701, 126.570667);
+                    map.setCenter(locPosition);
+                }
+
+                displayOrganizations(organizations);
+
+                document.getElementById('back-to-orgs').addEventListener('click', function() {
+                    document.getElementById('list-title').textContent = '기관 목록';
+                    displayOrganizations(organizations);
+                    document.getElementById('back-to-orgs-container').style.display = 'none';
+                    document.getElementById('org-pagination').style.display = 'flex';
+                    document.getElementById('search-container').style.display = 'block';
+                });
+
+                document.getElementById('search-input').addEventListener('input', function() {
+                    var searchTerm = this.value.toLowerCase();
+                    var filteredOrgs = organizations.filter(function(organization) {
+                        return organization.toLowerCase().includes(searchTerm);
+                    });
+                    displayOrganizations(filteredOrgs);
+                });
+            });
+        };
+
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>

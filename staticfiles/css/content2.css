@@ -1,0 +1,115 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+body{
+    font-family: 'Pretendard-Regular', sans-serif;
+}
+.menubar{
+    position: fixed;
+    top: 20px;
+    left: 40px;
+    right: 40px;
+    height: 50px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 30px;
+    display: inline-block;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 1000;
+    line-height: 50px;
+}
+.options{
+    color: black;
+    text-decoration-line: none;
+    margin-right: 20px;
+    float: right;
+}
+.material-symbols-rounded {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+    color: black;
+    margin-top: 13px;
+    margin-left: 20px;
+}
+
+.content_box{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: stretch;
+    margin: 100px auto;
+    width:90%;
+    height: 500px;
+}
+.content_box_left{
+    background: white;
+    width:65%;
+    height: 540px;
+    border-radius: 30px;
+    box-shadow: 5px 5px 10px 1px lightgrey;
+    margin-right: auto;
+    position: relative;
+}
+.content_box_right{
+    background: white;
+    width:30%;
+    height:500px;
+    border-radius: 30px;
+    box-shadow: 5px 5px 10px 1px lightgrey;
+    padding: 20px;
+}
+
+.title{
+    margin-top: 70px;
+    margin-left: 30px;
+    font-size: 50px;
+    font-weight: bolder;
+    text-align: left;
+}
+.content{
+    margin: auto 30px;
+    font-size: 20px;
+    font-weight: 400;
+}
+.favorite_btn{
+    position: absolute;
+    bottom: 50px;
+    right: 250px;
+    background-color: #ffc61a;
+    border: 0px;
+    width: 150px;
+    height: 40px;
+    border-radius: 80px;
+    box-shadow: 5px 5px 10px 1px lightgrey;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
+}
+.apply_btn{
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+    background-color: #3e9542;
+    border: 0px;
+    width: 150px;
+    height: 40px;
+    border-radius: 80px;
+    box-shadow: 5px 5px 10px 1px lightgrey;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
+}
+#btn_text{
+    text-decoration-line: none;
+    color: white;
+    font-size: 15px;
+    vertical-align: center;
+}
+
+span, #category{
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: -10px;
+}

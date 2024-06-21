@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link href="//cdn.jsdelivr.net/gh/snz-hayden/toolo/fonts/black_han_sans/black_han_sans.css" rel="stylesheet">
+</head>
+
+<body>
+    <p id="background">Again</p>
+    {% if request.user.is_authenticated %}
+    <div class="main">
+            <!--로그인-->
+            <a href="{% url 'content_list'%}" class="type"><p>콘텐츠로 찾기</p></a>
+            <a href="{% url 'map' %}" class="map"><p>지역에서 찾기</p></a>
+        </div>
+        <div class="bottom">
+            <a href="{% url 'my_page' %}" class="bottom_text">마이페이지</a>
+            <hr style="height:20px; width:1px; border-width:0; background-color:white; text-align:center; display:inline-block; vertical-align: middle;">
+            <a href="{% url 'logout' %}" class="bottom_text">로그아웃</a>
+        </div>
+    {% else %}
+        <div class="main">
+            <!--비로그인-->
+            <a href="{% url 'content_list'%}" class="type"><p>콘텐츠로 찾기</p></a>
+            <a href="{% url 'map' %}" class="map"><p>지역에서 찾기</p></a>
+        </div>
+        <div class="bottom">
+            <a href="{% url 'login'%}" class="bottom_text">로그인</a>
+            <hr style="height:20px; width:1px; border-width:0; background-color:white; text-align:center; display:inline-block; vertical-align: middle;">
+            <a href="{% url 'signup'%}" class="bottom_text">회원가입</a>
+    </div>
+    {% endif %}
+</body>
+
+</html>
